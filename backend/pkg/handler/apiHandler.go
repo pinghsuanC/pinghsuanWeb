@@ -1,21 +1,15 @@
 package apiHandler
 
 import (
-	"log"
-
-	"github.com/joho/godotenv"
+	"net/http"
 )
 
-func RunHandler() {
-	err := godotenv.Load(".env")
 
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-
-
-	getYoutubeVideos()
+func GetYoutubeSnippet(w http.ResponseWriter) {
+	videoSummaries := getYoutubeVideos()
+	sendJson(w, videoSummaries)
 }
-func getTwitterData()   {}
-func getInstagramData() {}
 
+
+func GetTwitterData()   {}
+func GetInstagramData() {}

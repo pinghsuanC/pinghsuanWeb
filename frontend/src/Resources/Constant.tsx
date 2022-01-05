@@ -34,7 +34,7 @@ const CONFIG = {};
 const PATH = {
 	AVATAR_PATH: "/images/avatar.jpg",
 };
-
-const CONSTANTS = { THEME, CONFIG, PATH, DEVICES, AVAILABLE_LANGUAGE };
+const IP = "http://localhost:8001";
+const CONSTANTS = { THEME, CONFIG, PATH, DEVICES, AVAILABLE_LANGUAGE, IP };
 
 export default CONSTANTS;
