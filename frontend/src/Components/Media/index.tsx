@@ -3,25 +3,45 @@ import styled from "styled-components";
 import PageWrapper from "../../Refactory/PageWrapper";
 import { useResourceContext } from "../../Context/ResourceContext";
 import YoutubeEmbed from "../../Refactory/YoutubeEmbed";
+import TwitterFeed from "../../Refactory/TwitterFeed";
 import allActions from "../../Redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
+import MediaDeck from "./MediaDeck";
 
 const Media: React.FC = () => {
-	const { ytActions } = allActions;
+	const { ytActions, twActions } = allActions;
 	const dispatch = useDispatch();
-	const status = useSelector((state: rootState) => state.ytReducer.status);
-	const ytVideos = useSelector((state: rootState) => state.ytReducer.yt);
-
 	const { CONSTANTS, useTheme } = useResourceContext();
 	const { getThemeColor } = useTheme();
+	const ytVideos = useSelector((state: rootState) => state.ytReducer.yt);
+	const twData = useSelector((state: rootState) => state.twReducer.tw.data);
 
 	// fetch data from server at start
 	useEffect(() => {
-		const getTwitterInfo = () => {};
+		const getTwitterInfo = async () => {
+			if (twData.length <= 0) {
+				dispatch(twActions.getTwInfo());
+				let response = await fetch(`${CONSTANTS.IP}/twitter`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}).catch((err) => {
+					console.log("There is an error", err);
+					return Promise.reject(err.message || err);
+				});
+				let data = await response.json();
+				if (data.statusCode === 200) {
+					dispatch(twActions.receiveTwInfo(data.twitterContent));
+				} else {
+					dispatch(twActions.receiveTwInfoErr());
+				}
+			}
+		};
 
 		const getYoutubeInfo = async () => {
-			dispatch(ytActions.getYtInfo());
 			if (ytVideos.length <= 0) {
+				dispatch(ytActions.getYtInfo());
 				let response = await fetch(`${CONSTANTS.IP}/youtube`, {
 					method: "GET",
 					headers: {
@@ -32,8 +52,8 @@ const Media: React.FC = () => {
 					return Promise.reject(err.message || err);
 				});
 				let data = await response.json();
-				if (data.StatusCode === 200) {
-					dispatch(ytActions.receiveYtInfo(data.PlayListItem));
+				if (data.statusCode === 200) {
+					dispatch(ytActions.receiveYtInfo(data.playListItem));
 				} else {
 					dispatch(ytActions.receiveYtInfoErr());
 				}
@@ -41,27 +61,14 @@ const Media: React.FC = () => {
 		};
 
 		getYoutubeInfo();
+		getTwitterInfo();
 	}, []);
 
 	return (
 		<MediaWrapper getThemeColor={getThemeColor} device={CONSTANTS.DEVICES}>
-			<>
-				{ytVideos &&
-					ytVideos.map((video: youtubeVideo) => {
-						return (
-							<YoutubeEmbed
-								videoId={video.snippet.resourceId.videoId}
-								title={video.snippet.title}
-							/>
-						);
-					})}
-			</>
+			<MediaDeck />
 		</MediaWrapper>
 	);
-};
-
-type youtubeVideo = {
-	[key: string]: { [key: string]: any };
 };
 
 const MediaWrapper = styled(PageWrapper)``;

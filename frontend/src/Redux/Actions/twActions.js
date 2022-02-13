@@ -1,9 +1,9 @@
 const getTwInfo = () => ({
 	type: "GET_TW_INFO",
 });
-const receiveTwInfo = (twInfo) => ({
+const receiveTwInfo = (tw) => ({
 	type: "RECEIVE_TW_INFO_SUCCESS",
-	twInfo,
+	tw,
 });
 const receiveTwInfoErr = () => ({
 	type: "RECEIVE_TW_ERROR",

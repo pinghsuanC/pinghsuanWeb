@@ -21,8 +21,8 @@ type playListItem struct {
 }
 
 type ytResponse struct {
-	PlayListItem []playListItem
-	StatusCode   int
+	PlayListItem []playListItem `json:"playListItem"`
+	StatusCode   int            `json:"statusCode"`
 }
 
 type twitterInfo struct {
@@ -39,4 +39,9 @@ type twitterInfo struct {
 			Username string `json:"username"`
 		} `json:"users"`
 	} `json:"includes"`
+}
+
+type twResponse struct {
+	TwitterContent twitterInfo `json:"twitterContent"`
+	StatusCode     int         `json:"statusCode"`
 }

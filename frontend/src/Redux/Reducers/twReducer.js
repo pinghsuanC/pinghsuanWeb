@@ -1,7 +1,9 @@
 const initialState = {
-	token: false,
 	status: "initial",
-	tw: [],
+	tw: {
+		data: [],
+		included: [],
+	},
 };
 
 export default function twReducer(state = { ...initialState }, action) {
@@ -10,7 +12,7 @@ export default function twReducer(state = { ...initialState }, action) {
 			return { ...state, status: "loading" };
 		}
 		case "RECEIVE_TW_INFO_SUCCESS": {
-			return { ...state, status: "idle", tw: [...action.twInfo] };
+			return { ...state, status: "idle", tw: { ...action.tw } };
 		}
 		case "RECEIVE_TW_ERROR": {
 			return { ...state, status: "error" };
