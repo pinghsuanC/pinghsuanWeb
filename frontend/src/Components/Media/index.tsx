@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import PageWrapper from "../../Refactory/PageWrapper";
 import { useResourceContext } from "../../Context/ResourceContext";
 import YoutubeEmbed from "../../Refactory/YoutubeEmbed";
+import allActions from "../../Redux/Actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Media: React.FC = () => {
+	const { ytActions } = allActions;
+	const dispatch = useDispatch();
+	const status = useSelector((state: rootState) => state.ytReducer.status);
+
 	const { CONSTANTS, useTheme, youtubeVideos, setYoutubeVideos } =
 		useResourceContext();
 	const { getThemeColor } = useTheme();
 
 	// fetch data from server at start
 	useEffect(() => {
-		const getTwitterInfo = () => {
-			
-		};
+		const getTwitterInfo = () => {};
 
 		const getYoutubeInfo = () => {
 			if (youtubeVideos.length <= 0) {

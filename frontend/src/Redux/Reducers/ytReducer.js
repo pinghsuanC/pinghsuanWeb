@@ -9,7 +9,7 @@ export default function ytReducer(state = { ...initialState }, action) {
 			return { ...state, status: "loading" };
 		}
 		case "RECEIVE_YT_INFO_SUCCESS": {
-			return { ...state, status: "idle", yt: [...action.channelInfo] };
+			return { ...state, status: "idle", yt: [...action.yt] };
 		}
 		case "RECEIVE_YT_ERROR": {
 			return { ...state, status: "error" };

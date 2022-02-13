@@ -33,3 +33,16 @@ type linkInfoType = {
 	link: string;
 	logo: IconType;
 };
+
+type ytReducer = {
+	status: string;
+	yt: array;
+};
+type twReducer = {
+	status: string;
+	tw: array;
+};
+type rootState = {
+	ytReducer: ytReducer;
+	twReducer: twReducer;
+};

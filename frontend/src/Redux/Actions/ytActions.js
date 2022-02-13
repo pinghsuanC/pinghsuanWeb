@@ -1,9 +1,9 @@
 const getYtInfo = () => ({
 	type: "GET_YT_INFO",
 });
-const receiveYtInfo = (ytInfo) => ({
+const receiveYtInfo = (yt = []) => ({
 	type: "RECEIVE_YT_INFO_SUCCESS",
-	ytInfo,
+	yt,
 });
 const receiveYtInfoErr = () => ({
 	type: "RECEIVE_YT_ERROR",
