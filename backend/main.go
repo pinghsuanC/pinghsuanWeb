@@ -15,7 +15,13 @@ import (
 
 
 func getYoutubeSnippet(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Getting youtoube videos...");
 	apiHandler.GetYoutubeSnippet(w)
+}
+
+func getTwitterData(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Getting twitter data...");
+	apiHandler.GetTwitterData(w)
 }
 
 func welcome(w http.ResponseWriter, r *http.Request){
@@ -26,6 +32,8 @@ func welcome(w http.ResponseWriter, r *http.Request){
 func main() {
 	// read env variables
 	os.Setenv("YOUTUBE_API_TOKEN", goDotEnvVariable("YOUTUBE_API_TOKEN"))
+	os.Setenv("TWITTER_BEARER_TOKEN", goDotEnvVariable("TWITTER_BEARER_TOKEN"))
+	os.Setenv("TWITTER_USER_ID", goDotEnvVariable("TWITTER_USER_ID"))
 	os.Setenv("CHANNEL_ID",  goDotEnvVariable("CHANNEL_ID"))
 	os.Setenv("ALL_PLAYLIST_ID",  goDotEnvVariable("ALL_PLAYLIST_ID"))
 	os.Setenv("PORT",  goDotEnvVariable("PORT"))
@@ -41,6 +49,7 @@ func main() {
 	// endpoint
 	r.HandleFunc("/", welcome).Methods("GET", "OPTIONS")
 	r.HandleFunc("/youtube", getYoutubeSnippet).Methods("GET", "OPTIONS")
+	r.HandleFunc("/twitter", getTwitterData).Methods("GET", "OPTIONS")
 
 	// start srever
 	log.Fatal(http.ListenAndServe(":"+port, r))

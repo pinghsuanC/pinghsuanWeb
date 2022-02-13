@@ -1,6 +1,6 @@
 // TODO: later replace with redux
 
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 // constants
 import CONSTANTS from "../Resources/Constant";
 import LINK_DEF from "../Resources/LinkGroup";
@@ -11,6 +11,8 @@ import { useLan, LanguageContextProvider } from "../Context/LanguageContext";
 const defualtVal: resourceProvider = {};
 const ResourceContext = createContext(defualtVal);
 const ResourceProvider: React.FC<contextChildren> = ({ children }) => {
+	const [youtubeVideos, setYoutubeVideos] = useState([]);
+	
 	return (
 		<ResourceContext.Provider
 			value={{
@@ -18,6 +20,8 @@ const ResourceProvider: React.FC<contextChildren> = ({ children }) => {
 				LINK_DEF: LINK_DEF,
 				useTheme: useTheme,
 				useLan: useLan,
+				youtubeVideos: youtubeVideos,
+				setYoutubeVideos: setYoutubeVideos,
 			}}
 		>
 			<LanguageContextProvider>

@@ -5,24 +5,36 @@ import { useResourceContext } from "../../Context/ResourceContext";
 import YoutubeEmbed from "../../Refactory/YoutubeEmbed";
 
 const Media: React.FC = () => {
-	const { CONSTANTS, useTheme } = useResourceContext();
+	const { CONSTANTS, useTheme, youtubeVideos, setYoutubeVideos } =
+		useResourceContext();
 	const { getThemeColor } = useTheme();
-	const [youtubeVideos, setYoutubeVideos] = useState([]);
 
-	fetch(`${CONSTANTS.IP}/youtube`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-		},
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			setYoutubeVideos(data);
-			console.log(data);
-		})
-		.catch((error) => {
-			console.error("There was an error!", error);
-		});
+	// fetch data from server at start
+	useEffect(() => {
+		const getTwitterInfo = () => {
+			
+		};
+
+		const getYoutubeInfo = () => {
+			if (youtubeVideos.length <= 0) {
+				fetch(`${CONSTANTS.IP}/youtube`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						setYoutubeVideos(data);
+					})
+					.catch((error) => {
+						console.error("There was an error!", error);
+					});
+			}
+		};
+
+		getYoutubeInfo();
+	}, []);
 
 	return (
 		<MediaWrapper getThemeColor={getThemeColor} device={CONSTANTS.DEVICES}>

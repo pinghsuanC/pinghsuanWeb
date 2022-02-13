@@ -1,7 +1,8 @@
 import "./App.css";
 import React, { ReactText } from "react";
 import GlobalStyle from "./GlobalStyle";
-
+import { Provider } from "react-redux";
+import store from "./Redux/store";
 // written components
 import ScrollToTop from "./Refactory/ScrollToTop";
 import Footer from "./Components/Footer";
@@ -22,21 +23,23 @@ import styled from "styled-components";
 function App() {
 	return (
 		<div className="App">
-			<ResourceProvider>
-				<BrowserRouter>
-					<ScrollToTop />
-					<RouteWrapper>
-						<Header />
-						<Routes>
-							<Route path="/about" element={<About />} />
-							<Route path="/post" element={<Post />} />
-							<Route path="/media" element={<Media />} />
-							<Route path="*" element={<About />} />
-						</Routes>
-						<Footer />
-					</RouteWrapper>
-				</BrowserRouter>
-			</ResourceProvider>
+			<Provider store={store}>
+				<ResourceProvider>
+					<BrowserRouter>
+						<ScrollToTop />
+						<RouteWrapper>
+							<Header />
+							<Routes>
+								<Route path="/about" element={<About />} />
+								<Route path="/post" element={<Post />} />
+								<Route path="/media" element={<Media />} />
+								<Route path="*" element={<About />} />
+							</Routes>
+							<Footer />
+						</RouteWrapper>
+					</BrowserRouter>
+				</ResourceProvider>
+			</Provider>
 			<GlobalStyle />
 		</div>
 	);
