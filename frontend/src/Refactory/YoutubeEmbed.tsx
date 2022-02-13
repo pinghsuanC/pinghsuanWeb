@@ -37,19 +37,23 @@ const YoutubeEmbed: React.FC<{
 const IFrame = styled.iframe<{
 	device: deviceType;
 }>`
+	margin-top: 3px;
+	margin-bottom: 3px;
 	@media ${(props) => props.device.mobileXs},
 		${(props) => props.device.mobileS},
 		${(props) => props.device.mobileM},
 		${(props) => props.device.mobileL} {
 		width: 70%;
 		height: 150px;
-		size: 5px;
 	}
-	@media ${(props) => props.device.tablet} {
+	@media ${(props) => props.device.tablet}, ${(props) => props.device.laptop} {
+		width: 55%;
+		height: 300px;
 	}
-	@media ${(props) => props.device.laptop},
-		${(props) => props.device.laptopL},
+	@media ${(props) => props.device.laptopL},
 		${(props) => props.device.desktop} {
+		width: 35%;
+		height: 400px;
 	}
 `;
 

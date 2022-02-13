@@ -13,7 +13,7 @@ func getTwitterData() twResponse {
 
 	bearer := "Bearer " + os.Getenv("TWITTER_BEARER_TOKEN");
 	userId := os.Getenv("TWITTER_USER_ID");
-	endpointURL := "https://api.twitter.com/2/users/"+ userId +"/tweets?tweet.fields=created_at&expansions=author_id&max_results=5";
+	endpointURL := "https://api.twitter.com/2/users/"+ userId +"/tweets?tweet.fields=created_at&expansions=author_id&max_results=20";
 
 	// create request with bearer token header
 	req, _ := http.NewRequest("GET", endpointURL, nil)

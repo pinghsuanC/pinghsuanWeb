@@ -4,6 +4,8 @@ import TwitterFeed from "../../Refactory/TwitterFeed";
 import YoutubeEmbed from "../../Refactory/YoutubeEmbed";
 import allActions from "../../Redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
+import { useTheme } from "../../Context/ThemeContext";
+import CenteredFlexDiv from "../../Refactory/CenteredFlexDiv";
 
 /**
  *
@@ -15,6 +17,7 @@ const MediaDeck: React.FC = () => {
 	const ytVideos = useSelector((state: rootState) => state.ytReducer.yt);
 	const twStatus = useSelector((state: rootState) => state.twReducer.status);
 	const twData = useSelector((state: rootState) => state.twReducer.tw.data);
+	const { getThemeColor } = useTheme();
 
 	const allElement: JSX.Element[] = [];
 
@@ -46,16 +49,27 @@ const MediaDeck: React.FC = () => {
 
 	return (
 		<MediaDeckWrapper>
+			<div>FILTER_PLACE_HOLDER</div>
 			{shuffledArray &&
-				shuffledArray.map((ele) => <MediaDeckElement>{ele}</MediaDeckElement>)}
+				shuffledArray.map((ele) => (
+					<MediaDeckElement getThemeColor={getThemeColor}>
+						{ele}
+					</MediaDeckElement>
+				))}
 		</MediaDeckWrapper>
 	);
 };
 
-const MediaDeckWrapper = styled.div``;
-const MediaDeckElement = styled.div`
-	border: 1px solid red;
-	border-radius: 25px;
-	width: 100%;
+const MediaDeckWrapper = styled(CenteredFlexDiv)`
+	flex-direction: column;
+`;
+
+const MediaDeckElement = styled.div<{
+	getThemeColor: (arg0: string) => string;
+}>`
+	border: 1px solid ${(props) => props.getThemeColor("MAIN_COLOR_DARK")};
+	border-radius: 10px;
+	width: 80%;
+	margin-top: 5px;
 `;
 export default MediaDeck;
