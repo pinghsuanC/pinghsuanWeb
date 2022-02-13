@@ -46,14 +46,15 @@ const IFrame = styled.iframe<{
 		width: 70%;
 		height: 150px;
 	}
-	@media ${(props) => props.device.tablet}, ${(props) => props.device.laptop} {
-		width: 55%;
-		height: 300px;
+	@media ${(props) => props.device.tablet} {
+		width: 300px;
+		height: 200px;
 	}
 	@media ${(props) => props.device.laptopL},
+		${(props) => props.device.laptop},
 		${(props) => props.device.desktop} {
-		width: 35%;
-		height: 400px;
+		width: 500px;
+		height: 250px;
 	}
 `;
 

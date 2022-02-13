@@ -6,6 +6,7 @@ import allActions from "../../Redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "../../Context/ThemeContext";
 import CenteredFlexDiv from "../../Refactory/CenteredFlexDiv";
+import CONSTANTS from "../../Resources/Constant";
 
 /**
  *
@@ -18,6 +19,7 @@ const MediaDeck: React.FC = () => {
 	const twStatus = useSelector((state: rootState) => state.twReducer.status);
 	const twData = useSelector((state: rootState) => state.twReducer.tw.data);
 	const { getThemeColor } = useTheme();
+	const device = CONSTANTS.DEVICES;
 
 	const allElement: JSX.Element[] = [];
 
@@ -52,7 +54,7 @@ const MediaDeck: React.FC = () => {
 			<div>FILTER_PLACE_HOLDER</div>
 			{shuffledArray &&
 				shuffledArray.map((ele) => (
-					<MediaDeckElement getThemeColor={getThemeColor}>
+					<MediaDeckElement getThemeColor={getThemeColor} device={device}>
 						{ele}
 					</MediaDeckElement>
 				))}
@@ -65,11 +67,27 @@ const MediaDeckWrapper = styled(CenteredFlexDiv)`
 `;
 
 const MediaDeckElement = styled.div<{
+	device: deviceType;
 	getThemeColor: (arg0: string) => string;
 }>`
 	border: 1px solid ${(props) => props.getThemeColor("MAIN_COLOR_DARK")};
 	border-radius: 10px;
-	width: 80%;
-	margin-top: 5px;
+
+	@media ${(props) => props.device.mobileXs},
+		${(props) => props.device.mobileS},
+		${(props) => props.device.mobileM},
+		${(props) => props.device.mobileL} {
+		width: 80%;
+		margin-top: 5px;
+	}
+	@media ${(props) => props.device.tablet}, ${(props) => props.device.laptop} {
+		width: 55%;
+		margin-top: 5px;
+	}
+	@media ${(props) => props.device.laptopL},
+		${(props) => props.device.desktop} {
+		width: 40%;
+		margin-top: 5px;
+	}
 `;
 export default MediaDeck;
