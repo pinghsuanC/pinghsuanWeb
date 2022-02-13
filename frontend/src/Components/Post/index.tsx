@@ -9,7 +9,7 @@ const Post: React.FC = () => {
 
 	return (
 		<PostWrapper getThemeColor={getThemeColor} device={CONSTANTS.DEVICES}>
-			Post
+			TBC
 		</PostWrapper>
 	);
 };

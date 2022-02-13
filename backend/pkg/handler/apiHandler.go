@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// TODO: Instagram API and github API
 
 func GetYoutubeSnippet(w http.ResponseWriter) {
 	videoSummaries := getYoutubeVideos()

@@ -11,6 +11,7 @@ import CONSTANTS from "../../Resources/Constant";
 /**
  *
  * return list of randomized jsx elements
+ * TODO: add Link element at the bottom
  *
  */
 const MediaDeck: React.FC = () => {
