@@ -7,7 +7,6 @@ import (
 
 func GetYoutubeSnippet(w http.ResponseWriter) {
 	videoSummaries := getYoutubeVideos()
-
 	//normalize the data
 
 	sendJson(w, videoSummaries)

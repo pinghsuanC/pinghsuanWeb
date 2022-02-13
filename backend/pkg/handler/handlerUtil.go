@@ -7,6 +7,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type any interface{}
+
 // helper
 func sendJson(w http.ResponseWriter, v interface{}){
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -14,8 +16,6 @@ func sendJson(w http.ResponseWriter, v interface{}){
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(v)
 }
-
-type any interface{}
 
 func getValueFromRequest(r *http.Request, field string) any {
 	params := mux.Vars(r)

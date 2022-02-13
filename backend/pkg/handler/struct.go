@@ -20,6 +20,11 @@ type playListItem struct {
 	} `json:"snippet"`
 }
 
+type ytResponse struct {
+	PlayListItem []playListItem
+	StatusCode   int
+}
+
 type twitterInfo struct {
 	Data []struct {
 		CreatedAt string `json:"created_at"`
