@@ -8,7 +8,7 @@ import (
 )
 
 // helper
-func sendJson(w http.ResponseWriter, v interface{} ){
+func sendJson(w http.ResponseWriter, v interface{}){
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Accept")
 	w.Header().Set("Content-Type", "application/json")

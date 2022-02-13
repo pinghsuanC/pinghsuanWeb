@@ -24,7 +24,8 @@ func getTwitterData() twitterInfo {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		return twitterInfo{}
 	}
 	defer resp.Body.Close()
 	

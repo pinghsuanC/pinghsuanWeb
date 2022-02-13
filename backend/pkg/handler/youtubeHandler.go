@@ -15,9 +15,11 @@ func getYoutubeVideos() []playListItem {
 	// get playlist items snippet by playlist id
 	resPlayListItems, err = http.Get("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId="+os.Getenv("ALL_PLAYLIST_ID")+"&key="+os.Getenv("YOUTUBE_API_TOKEN"))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		return []playListItem{}
 	}
 	defer resPlayListItems.Body.Close()
+	
 	// decode response
 	json.NewDecoder(resPlayListItems.Body).Decode(&playlistContent)
 	// return result

@@ -29,6 +29,7 @@ const Media: React.FC = () => {
 				})
 					.then((response) => response.json())
 					.then((data) => {
+						console.log(data);
 						setYoutubeVideos(data);
 					})
 					.catch((error) => {
