@@ -2,7 +2,7 @@
 
 # stacks
 
-- typescript
+- typescript + react
 - backend with Go
-- probably will use mongo db since there isn't much to be stored
+- database/auth using firestore
 - deployment through google or heroku; domain name undecided
