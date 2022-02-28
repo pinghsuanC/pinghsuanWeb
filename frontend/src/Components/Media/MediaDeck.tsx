@@ -18,43 +18,53 @@ const MediaDeck: React.FC = () => {
 	const ytStatus = useSelector((state: rootState) => state.ytReducer.status);
 	const ytVideos = useSelector((state: rootState) => state.ytReducer.yt);
 	const twStatus = useSelector((state: rootState) => state.twReducer.status);
-	const twData = useSelector((state: rootState) => state.twReducer.tw.data);
+	const twInput = useSelector((state: rootState) => state.twReducer.tw.data);
 	const { getThemeColor } = useTheme();
 	const device = CONSTANTS.DEVICES;
 
 	const allElement: JSX.Element[] = [];
+	const allData: (youtubeSnippet | twData)[] = [];
+	ytVideos.forEach((video: youtubeVideo) => {
+		allData.push(video.snippet);
+	});
+	twInput.forEach((tw: twData) => {
+		allData.push(tw);
+	});
+	allData.sort((a: youtubeSnippet | twData, b: youtubeSnippet | twData) => {
+		if (a.createdOn === b.createdOn) {
+			return 0;
+		}
+		return a.createdOn > b.createdOn ? -1 : 1;
+	});
 
-	if (ytStatus === "idle") {
-		ytVideos.forEach((video: youtubeVideo) => {
+	allData.forEach(function (data: youtubeSnippet | twData) {
+		if (data.type === "youtube") {
+			data = data as youtubeSnippet;
 			allElement.push(
 				<YoutubeEmbed
-					id={video.snippet.resourceId.videoId}
-					videoId={video.snippet.resourceId.videoId}
-					title={video.snippet.title}
+					id={data.resourceId.videoId}
+					videoId={data.resourceId.videoId}
+					title={data.title}
+					createdOn={data.createdOn}
 				/>
 			);
-		});
-	}
-
-	if (twStatus === "idle") {
-		twData.forEach((tw: twData) => {
+		} else if (data.type === "twitter") {
+			data = data as twData;
 			allElement.push(
 				<TwitterFeed
-					id={tw.id}
-					creationDate={tw.created_at}
-					content={tw.text}
+					id={data.id}
+					createdOn={data.createdOn}
+					content={data.text}
 				/>
 			);
-		});
-	}
-
-	const shuffledArray = allElement.sort(() => 0.5 - Math.random());
+		}
+	});
 
 	return (
 		<MediaDeckWrapper>
 			<div>FILTER_PLACE_HOLDER</div>
-			{shuffledArray &&
-				shuffledArray.map((ele) => (
+			{allElement &&
+				allElement.map((ele) => (
 					<MediaDeckElement getThemeColor={getThemeColor} device={device}>
 						{ele}
 					</MediaDeckElement>
@@ -64,7 +74,7 @@ const MediaDeck: React.FC = () => {
 };
 
 const MediaDeckWrapper = styled(CenteredFlexDiv)`
-	flex-direction: column;
+	flex-flow: column wrap;
 `;
 
 const MediaDeckElement = styled.div<{
@@ -91,4 +101,5 @@ const MediaDeckElement = styled.div<{
 		margin-top: 5px;
 	}
 `;
+
 export default MediaDeck;

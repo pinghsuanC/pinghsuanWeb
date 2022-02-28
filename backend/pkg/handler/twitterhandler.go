@@ -32,6 +32,13 @@ func getTwitterData() twResponse {
 	// decode response
 	json.NewDecoder(resp.Body).Decode(&twitterContent)
 	responseCode := resp.StatusCode
+
+	// pre-processing
+	for k :=0; k<len(twitterContent.Data); k++  {
+		twitterContent.Data[k].Type = "twitter";
+		twitterContent.Data[k].CreatedOn = twitterContent.Data[k].CreatedAt;
+	}
+	
 	// return result
 	return twResponse{ TwitterContent: twitterContent, StatusCode: responseCode }
 }

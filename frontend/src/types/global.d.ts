@@ -56,23 +56,29 @@ type rootState = {
 };
 
 type youtubeVideo = {
-	snippet: {
-		description: string;
-		publishedAt: string;
-		resourceId: {
-			videoId: string;
-		};
-		thumbnails: {
-			high: {
-				url: string;
-			};
-		};
-		title: string;
+	snippet: youtubeSnippet;
+};
+
+type youtubeSnippet = {
+	type: string;
+	description: string;
+	publishedAt: string;
+	createdOn: string;
+	resourceId: {
+		videoId: string;
 	};
+	thumbnails: {
+		high: {
+			url: string;
+		};
+	};
+	title: string;
 };
 
 type twData = {
+	type: string;
 	created_at: string;
+	createdOn: string;
 	text: string;
 	author_id: string;
 	id: string;

@@ -12,8 +12,6 @@ import (
 	apiHandler "github.com/pinghsuanC/pinghsuanWeb/backend/pkg/handler"
 )
 
-
-
 func getYoutubeSnippet(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Getting youtoube videos...");
 	apiHandler.GetYoutubeSnippet(w)
@@ -50,6 +48,9 @@ func main() {
 	r.HandleFunc("/", welcome).Methods("GET", "OPTIONS")
 	r.HandleFunc("/youtube", getYoutubeSnippet).Methods("GET", "OPTIONS")
 	r.HandleFunc("/twitter", getTwitterData).Methods("GET", "OPTIONS")
+
+	// initialize connection to firebase
+	apiHandler.InitFirebaseSA();
 
 	// start srever
 	log.Fatal(http.ListenAndServe(":"+port, r))

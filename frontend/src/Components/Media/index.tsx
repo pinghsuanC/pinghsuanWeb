@@ -60,8 +60,7 @@ const Media: React.FC = () => {
 			}
 		};
 
-		getYoutubeInfo();
-		getTwitterInfo();
+		Promise.all([getYoutubeInfo(), getTwitterInfo()]);
 	}, []);
 
 	return (

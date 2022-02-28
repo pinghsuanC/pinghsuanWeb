@@ -1,5 +1,7 @@
 package apiHandler
 
+import "time"
+
 type playListInfo struct {
 	Items []playListItem `json:"items"`
 }
@@ -7,6 +9,7 @@ type playListInfo struct {
 type playListItem struct {
 	Snippet struct {
 		PublishAt   string `json:"publishedAt"`
+		CreatedOn   string `json:"createdOn"`
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		Thumbnails  struct {
@@ -17,6 +20,7 @@ type playListItem struct {
 		ResourceId struct {
 			VideoId string `json:"videoId"`
 		} `json:"resourceId"`
+		Type string `json:"type"`
 	} `json:"snippet"`
 }
 
@@ -28,9 +32,11 @@ type ytResponse struct {
 type twitterInfo struct {
 	Data []struct {
 		CreatedAt string `json:"created_at"`
+		CreatedOn string `json:"createdOn"`
 		Id        string `json:"id"`
 		Text      string `json:"text"`
 		AuthorId  string `json:"author_id"`
+		Type 	  string `json:"type"`
 	} `json:"data"`
 	Includes struct {
 		Users []struct {
@@ -44,4 +50,10 @@ type twitterInfo struct {
 type twResponse struct {
 	TwitterContent twitterInfo `json:"twitterContent"`
 	StatusCode     int         `json:"statusCode"`
+}
+
+type firebasePost struct {
+	Content string `json: "content"`
+	Post_date time.Time `json: "post_date"`
+	Title string `json: "title"`
 }

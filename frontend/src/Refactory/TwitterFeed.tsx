@@ -4,9 +4,9 @@ import { useTheme } from "../Context/ThemeContext";
 
 const TwitterFeed: React.FC<{
 	id: string;
-	creationDate: string;
+	createdOn: string;
 	content: string;
-}> = ({ id, creationDate, content }) => {
+}> = ({ id, createdOn, content }) => {
 	const { getThemeColor } = useTheme();
 	let isRetweet = false;
 	let isReply = false;
@@ -34,7 +34,7 @@ const TwitterFeed: React.FC<{
 				{text}
 			</TwitterStatusHeader>
 			<TwitterContent>{content}</TwitterContent>
-			<TwitterTime>Created on: {creationDate}</TwitterTime>
+			<TwitterTime>Created on: {createdOn}</TwitterTime>
 		</TwitterWrapper>
 	);
 };

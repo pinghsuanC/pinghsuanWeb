@@ -10,7 +10,8 @@ const YoutubeEmbed: React.FC<{
 	id: string;
 	title: string;
 	videoId: string;
-}> = ({ id, title, videoId }) => {
+	createdOn: string;
+}> = ({ id, title, videoId, createdOn }) => {
 	const { ytPlayerActions } = allActions;
 	const dispatch = useDispatch();
 	const ytPlayerVideoId = useSelector(
@@ -22,17 +23,26 @@ const YoutubeEmbed: React.FC<{
 
 	// TODO: find a way to pause other videos when playing one
 	return (
-		<IFrame
-			device={device}
-			id={id}
-			title={title}
-			src={`//www.youtube.com/embed/${videoId}`}
-			frameBorder="0"
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-			allowFullScreen
-		></IFrame>
+		<YoutubeEembedWrapper>
+			<IFrame
+				device={device}
+				id={id}
+				title={title}
+				src={`//www.youtube.com/embed/${videoId}`}
+				frameBorder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowFullScreen
+			></IFrame>
+			<YoutubeTimer>Created on {createdOn}</YoutubeTimer>
+		</YoutubeEembedWrapper>
 	);
 };
+
+const YoutubeEembedWrapper = styled.div`
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 15px;
+`;
 
 const IFrame = styled.iframe<{
 	device: deviceType;
@@ -56,6 +66,13 @@ const IFrame = styled.iframe<{
 		width: 500px;
 		height: 250px;
 	}
+`;
+
+const YoutubeTimer = styled.div`
+	text-align: left;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-bottom: 5px;
 `;
 
 export default YoutubeEmbed;

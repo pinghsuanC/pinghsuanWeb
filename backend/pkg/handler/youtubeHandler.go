@@ -23,6 +23,12 @@ func getYoutubeVideos() ytResponse {
 	// decode response
 	json.NewDecoder(resPlayListItems.Body).Decode(&playlistContent)
 	responseStatus := resPlayListItems.StatusCode;
+
+	// pre-processing
+	for k :=0; k<len(playlistContent.Items); k++  {
+		playlistContent.Items[k].Snippet.Type = "youtube";
+		playlistContent.Items[k].Snippet.CreatedOn = playlistContent.Items[k].Snippet.PublishAt;
+	}
 	// return result
 	return ytResponse{ PlayListItem: playlistContent.Items, StatusCode: responseStatus }
 }
