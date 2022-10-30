@@ -1,13 +1,13 @@
-const getBlogInfo = () => ({
+const getBlogs = () => ({
 	type: "GET_BLOG_INFO",
 });
-const receiveBlogInfo = (blogInfo) => ({
+const receiveBlogs = (blogs) => ({
 	type: "RECEIVE_BLOG_INFO_SUCCESS",
-	blogInfo,
+	blogs,
 });
-const receiveBlogInfoErr = () => ({
+const receiveBlogsErr = () => ({
 	type: "RECEIVE_BLOG_ERROR",
 });
 
-const blogActions = { getBlogInfo, receiveBlogInfo, receiveBlogInfoErr };
+const blogActions = { getBlogs, receiveBlogs, receiveBlogsErr };
 export default blogActions;

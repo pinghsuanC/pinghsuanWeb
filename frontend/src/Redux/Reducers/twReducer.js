@@ -1,4 +1,5 @@
 const initialState = {
+	fetched: false,
 	status: "initial",
 	tw: {
 		data: [],
@@ -12,10 +13,10 @@ export default function twReducer(state = { ...initialState }, action) {
 			return { ...state, status: "loading" };
 		}
 		case "RECEIVE_TW_INFO_SUCCESS": {
-			return { ...state, status: "idle", tw: { ...action.tw } };
+			return { ...state, status: "idle", tw: { ...action.tw }, fetched: true };
 		}
 		case "RECEIVE_TW_ERROR": {
-			return { ...state, status: "error" };
+			return { ...state, status: "error", fetched: true };
 		}
 		default: {
 			return { ...state };

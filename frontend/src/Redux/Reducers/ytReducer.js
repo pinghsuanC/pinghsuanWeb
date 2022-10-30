@@ -1,4 +1,5 @@
 const initialState = {
+	fetched: false,
 	status: "initial",
 	yt: [],
 };
@@ -9,10 +10,10 @@ export default function ytReducer(state = { ...initialState }, action) {
 			return { ...state, status: "loading" };
 		}
 		case "RECEIVE_YT_INFO_SUCCESS": {
-			return { ...state, status: "idle", yt: [...action.yt] };
+			return { ...state, status: "idle", yt: [...action.yt], fetched: true };
 		}
 		case "RECEIVE_YT_ERROR": {
-			return { ...state, status: "error" };
+			return { ...state, status: "error", fetched: true };
 		}
 		default: {
 			return { ...state };

@@ -37,21 +37,27 @@ type linkInfoType = {
 type ytReducer = {
 	status: string;
 	yt: array;
+	fetched: boolean;
 };
 type ytPlayerReducer = {
 	videoId: string;
 };
 type twReducer = {
+	fetched: boolean;
 	status: string;
 	tw: {
 		data: twData[];
 		included: array;
 	};
 };
-
+type blogReducer = {
+	blogs: array;
+	fetched: boolean;
+};
 type rootState = {
 	ytReducer: ytReducer;
 	twReducer: twReducer;
+	blogReducer: blogReducer;
 	ytPlayerReducer: ytPlayerReducer;
 };
 
@@ -82,4 +88,11 @@ type twData = {
 	text: string;
 	author_id: string;
 	id: string;
+};
+
+type blogData = {
+	type: string;
+	content: string;
+	title: string;
+	createdOn: string;
 };

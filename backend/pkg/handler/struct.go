@@ -52,8 +52,15 @@ type twResponse struct {
 	StatusCode     int         `json:"statusCode"`
 }
 
-type firebasePost struct {
-	Content string `json: "content"`
-	Post_date time.Time `json: "post_date"`
-	Title string `json: "title"`
+type blogInfo struct {
+	Content string `json:"content"`
+	Post_date time.Time `json:"post_date"`
+	Title string `json:"title"`
+	Type string `json:"type"`
+	CreatedOn string `json:"createdOn"`
+}
+
+type blogResponse struct {
+	BlogContentList []blogInfo `json:"blogInfo"`
+	StatusCode int `json:"statusCode"`
 }

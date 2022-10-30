@@ -13,13 +13,13 @@ const Media: React.FC = () => {
 	const dispatch = useDispatch();
 	const { CONSTANTS, useTheme } = useResourceContext();
 	const { getThemeColor } = useTheme();
-	const ytVideos = useSelector((state: rootState) => state.ytReducer.yt);
-	const twData = useSelector((state: rootState) => state.twReducer.tw.data);
+	const ytFetched = useSelector((state: rootState) => state.ytReducer.fetched);
+	const twFetched = useSelector((state: rootState) => state.twReducer.fetched);
 
 	// fetch data from server at start
 	useEffect(() => {
 		const getTwitterInfo = async () => {
-			if (twData.length <= 0) {
+			if (!twFetched) {
 				dispatch(twActions.getTwInfo());
 				let response = await fetch(`${CONSTANTS.IP}/twitter`, {
 					method: "GET",
@@ -32,6 +32,7 @@ const Media: React.FC = () => {
 				});
 				let data = await response.json();
 				if (data.statusCode === 200) {
+					console.log(data);
 					dispatch(twActions.receiveTwInfo(data.twitterContent));
 				} else {
 					dispatch(twActions.receiveTwInfoErr());
@@ -40,7 +41,7 @@ const Media: React.FC = () => {
 		};
 
 		const getYoutubeInfo = async () => {
-			if (ytVideos.length <= 0) {
+			if (!ytFetched) {
 				dispatch(ytActions.getYtInfo());
 				let response = await fetch(`${CONSTANTS.IP}/youtube`, {
 					method: "GET",
@@ -52,6 +53,7 @@ const Media: React.FC = () => {
 					return Promise.reject(err.message || err);
 				});
 				let data = await response.json();
+				console.log(data);
 				if (data.statusCode === 200) {
 					dispatch(ytActions.receiveYtInfo(data.playListItem));
 				} else {
@@ -61,7 +63,7 @@ const Media: React.FC = () => {
 		};
 
 		Promise.all([getYoutubeInfo(), getTwitterInfo()]);
-	}, []);
+	});
 
 	return (
 		<MediaWrapper getThemeColor={getThemeColor} device={CONSTANTS.DEVICES}>

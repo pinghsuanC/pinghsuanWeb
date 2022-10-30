@@ -22,6 +22,11 @@ func getTwitterData(w http.ResponseWriter, r *http.Request){
 	apiHandler.GetTwitterData(w)
 }
 
+func getBlogData(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Getting blog data...");
+	apiHandler.GetBlogData(w)
+}
+
 func welcome(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Entered home page");
 	json.NewEncoder(w).Encode("Hit home page")
@@ -48,9 +53,7 @@ func main() {
 	r.HandleFunc("/", welcome).Methods("GET", "OPTIONS")
 	r.HandleFunc("/youtube", getYoutubeSnippet).Methods("GET", "OPTIONS")
 	r.HandleFunc("/twitter", getTwitterData).Methods("GET", "OPTIONS")
-
-	// initialize connection to firebase
-	apiHandler.InitFirebaseSA();
+	r.HandleFunc("/blogs", getBlogData).Methods("GET", "OPTIONS")
 
 	// start srever
 	log.Fatal(http.ListenAndServe(":"+port, r))

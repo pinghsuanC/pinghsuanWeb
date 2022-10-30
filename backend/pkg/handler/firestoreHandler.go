@@ -18,8 +18,8 @@ var ctx context.Context;
 // TODO: function to convert timestamp both ways
 
 func addADocument(content string, post_date time.Time, title string){
-
-	_, _, err := client.Collection("posts").Add(ctx, firebasePost{
+	initFirebaseSA();
+	/*_, _, err := client.Collection("posts").Add(ctx, blogInfo{
 		Content: "test",
 		Post_date:  time.Now(),
 		Title:  "test title",
@@ -27,25 +27,39 @@ func addADocument(content string, post_date time.Time, title string){
 
 	if err != nil {
 		log.Fatalf("Failed adding alovelace: %v", err)
-	}
-
+	}*/
+	defer client.Close()
 }
 
-func getDocument(){
-	iter := client.Collection("posts").Documents(ctx)
+func getBlogData() blogResponse {
+	initFirebaseSA();
+	posts := client.Collection("posts");
+	q := posts.OrderBy("Post_date", firestore.Desc)
+	iter := q.Documents(ctx);
+	var blogInfoSlice = make([]blogInfo, 0);
 	for {
 		doc, err := iter.Next()
+		var blogDecode blogInfo;
 		if err == iterator.Done {
 			break
 		}
-		if err != nil {
-			log.Fatalf("Failed to iterate: %v", err)
+		if err := doc.DataTo(&blogDecode); err != nil {
+			fmt.Printf("Failed to decode response: %v", err)
+			return blogResponse { BlogContentList:[]blogInfo{}, StatusCode:500};
 		}
-		fmt.Println(doc.Data())
+		if err != nil {
+			fmt.Printf("Failed to iterate: %v", err)
+			return blogResponse { BlogContentList:[]blogInfo{}, StatusCode:500};
+		}
+		blogDecode.Type = "blog";
+		blogDecode.CreatedOn = blogDecode.Post_date.Format("2006-01-02");
+		blogInfoSlice = append(blogInfoSlice, blogDecode);
 	}
+	defer client.Close();
+	return blogResponse { BlogContentList:blogInfoSlice, StatusCode:200};
 }
 
-func InitFirebaseSA() {
+func initFirebaseSA() {
 	// Use a service account
 	ctx = context.Background()
 	sa := option.WithCredentialsFile("./private/pinghsuanwebsa.json")
@@ -59,7 +73,6 @@ func InitFirebaseSA() {
 	if clientError != nil {
 		log.Fatalln(err)
 	}
-	defer client.Close()
 
 	// addDocument();
 	// getDocument();
